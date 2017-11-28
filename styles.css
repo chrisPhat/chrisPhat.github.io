@@ -1,0 +1,15 @@
+header{
+  height: 100px;
+  width: 100%;
+  background-color: blue;
+}
+
+#sketch-holder > canvas{
+margin: 0px auto;
+}
+
+footer{
+  height: 200px;
+  width: 100%;
+  background-color: black;
+}

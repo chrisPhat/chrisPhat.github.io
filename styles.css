@@ -1,16 +1,36 @@
+body{
+  background-color: #333;
+  background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");
+  font-family: sans-serif;
+  color: #fff;
+  text-align: center;
+}
+
 header{
   height: 100px;
   width: 100%;
-  background-color: blue;
+  background-color: #444;
+
+  padding: 20px;
+  margin-bottom: 40px;
 }
 
-#sketch-holder > canvas{
+#myContainer{
       padding-left: 0;
       padding-right: 0;
       margin-left: auto;
       margin-right: auto;
       display: block;
-      width: 800px;
+      width: 1000px;
+}
+
+.instructions{
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 1000px;
 }
 
 footer{

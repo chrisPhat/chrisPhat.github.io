@@ -4,14 +4,15 @@ body{
   font-family: sans-serif;
   color: #fff;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 header{
   height: 100px;
   width: 100%;
   background-color: #444;
-
-  padding: 20px;
+  padding: 20px 0px;
   margin-bottom: 40px;
 }
 

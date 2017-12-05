@@ -8,17 +8,31 @@
 //that defines the shape (via keyboard)
 let selection = 0;
 let canvas;
+let slider;
 
 function setup() {
   canvas = createCanvas(1000, 500);
   canvas.parent('myContainer');
+  //Create Sliders and add Parent Containers to them
+  scaleSlider = createSlider(1, 5, 1); //(min value, max value, default value)
+  scaleSlider.parent('scaleSliderContainer');
+  frameSlider = createSlider(1, 60, 30);
+  frameSlider.parent('frameSliderContainer');
+
   strokeWeight(8);
   noFill();
-  frameRate(10);
+
   //noLoop();
 }
 
 function draw() {
+  //create a var to hold current value of sliders, and console.log them for debugging
+  var frameVal = frameSlider.value();
+  console.log("Frames: " + frameVal);
+  var scaleVal = scaleSlider.value();
+  console.log("Scale: " + scaleVal);
+
+  setFrameRate(frameVal); // use frameVal var to set framerate
   //background(50);
   //Create 300 shapes using the for-loop
   for (var i = 0; i < 300; i++) {
@@ -27,8 +41,9 @@ function draw() {
     translate(random(-100, width+100), random(-100, height+100));
     //Random rotation
     rotate(random(2*PI));
-    //Random scale
-    scale(random(3));
+    //Set scale with slider
+
+    scale(scaleVal); //Use scaleVal to set scale size
 
     //Create two variables that store the mapped values for mouse position
     let makeRed = map(mouseX, 0, width, 0, 255);

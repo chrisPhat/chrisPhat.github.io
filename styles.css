@@ -31,6 +31,10 @@ header{
   padding: 20px;
 }
 
+form{
+  margin: 10px 0px;
+}
+
 .instructions{
   padding-left: 0;
   padding-right: 0;
@@ -40,9 +44,6 @@ header{
   width: 1000px;
 }
 
-form{
-  margin: 10px 0px;
-}
 
 footer{
   height: 200px;

@@ -9,6 +9,7 @@
 let selection = 0;
 let canvas;
 let slider;
+let data;
 
 function setup() {
   canvas = createCanvas(1000, 500);
@@ -21,6 +22,10 @@ function setup() {
 
   strokeWeight(8);
   noFill();
+
+  let url = "http://api.worldbank.org/v2/datacatalog?format=json";
+  data = loadJSON(url);
+  console.log(data);
 
   //noLoop();
 }
@@ -69,4 +74,8 @@ function draw() {
   if (key === 'a') selection = 0;
   if (key === 's') selection = 1;
   if (key === 'd') selection = 2;
+}
+
+function mousePressed() {
+  console.log("This is a message");
 }

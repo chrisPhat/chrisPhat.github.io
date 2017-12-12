@@ -9,7 +9,7 @@
 let selection = 0;
 let canvas;
 let slider;
-let data;
+let dataObj;
 
 function setup() {
   canvas = createCanvas(1000, 500);
@@ -24,8 +24,8 @@ function setup() {
   noFill();
 
   let url = "https://api.worldbank.org/v2/datacatalog?format=json";
-  data = loadJSON(url);
-  console.log(data);
+  dataObj = loadJSON(url);
+  console.log(dataObj);
 
   //noLoop();
 }

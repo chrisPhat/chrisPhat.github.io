@@ -23,7 +23,7 @@ function setup() {
   strokeWeight(8);
   noFill();
 
-  let url = "http://api.worldbank.org/v2/datacatalog?format=json";
+  let url = "https://api.worldbank.org/v2/datacatalog?format=json";
   data = loadJSON(url);
   console.log(data);
 

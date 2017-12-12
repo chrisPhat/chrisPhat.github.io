@@ -23,7 +23,7 @@ function setup() {
   strokeWeight(8);
   noFill();
 
-  let url = "https://api.worldbank.org/v2/datacatalog?format=json";
+  let url = "https://data.police.uk/api/crime-categories?date=2017-11";
   dataObj = loadJSON(url);
   console.log(dataObj);
 

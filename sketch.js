@@ -33,9 +33,9 @@ function setup() {
 function draw() {
   //create a var to hold current value of sliders, and console.log them for debugging
   var frameVal = frameSlider.value();
-  console.log("Frames: " + frameVal);
+
   var scaleVal = scaleSlider.value();
-  console.log("Scale: " + scaleVal);
+
 
   setFrameRate(frameVal); // use frameVal var to set framerate
   //background(50);
@@ -77,5 +77,5 @@ function draw() {
 }
 
 function mousePressed() {
-  console.log("This is a message");
+
 }

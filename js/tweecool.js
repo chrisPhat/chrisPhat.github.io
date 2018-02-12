@@ -1,8 +1,119 @@
-/*Name : TweeCool
- *version: 2.2
- *Description: Get the latest tweets from twitter.
- *Website: www.tweecool.com
- *Licence: TweeCool
- *Author: Lande
- */
-!function(t){t.fn.extend({tweecool:function(e){function a(t){var e=new Date,a=Date.parse(e),r=1e3*t,i=(a-r)/1e3,o=1,n=60,s=3600,l=86400,_=604800,c=2592e3,u=31536e3;return 0>i?"a few seconds ago":i>o&&n>i?Math.round(i/o)+" second"+(Math.round(i/o)>1?"s":"")+" ago":i>=n&&s>i?Math.round(i/n)+" minute"+(Math.round(i/n)>1?"s":"")+" ago":i>=s&&l>i?Math.round(i/s)+" hour"+(Math.round(i/s)>1?"s":"")+" ago":i>=l&&_>i?Math.round(i/l)+" day"+(Math.round(i/l)>1?"s":"")+" ago":i>=_&&c>i?Math.round(i/_)+" week"+(Math.round(i/_)>1?"s":"")+" ago":i>=c&&u>i?Math.round(i/c)+" month"+(Math.round(i/c)>1?"s":"")+" ago":"over a year ago"}var r={username:"tweecool",limit:5,profile_image:!0,show_time:!0,show_media:!1,show_media_size:"thumb",show_actions:!1,action_reply_icon:"&crarr;",action_retweet_icon:"&prop;",action_favorite_icon:"&#10084",profile_img_url:"profile",show_retweeted_text:!1,exclude_replies:!1,callback:function(){}},e=t.extend(r,e);return this.each(function(){var r,i,o,n,s,l=e,_=t(this),c=t("<ul>").appendTo(_),u=/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi,h=/@+(\w+)/gi,d=/#+(\w+)/gi,w=l.exclude_replies?1:0;t.getJSON("http://tweecool.com/demo/api/"+l.username+"/"+l.limit+"/"+w,function(e){return e.errors||null==e?(_.html("No tweets available."),!1):(t.each(e.tweets,function(t,_){r=l.profile_image?"tweet"==l.profile_img_url?'<a href="https://twitter.com/'+l.username+"/status/"+_.id_str+'" target="_blank"><img src="'+e.user.profile_image_url+'" alt="'+l.username+'" /></a>':'<a href="https://twitter.com/'+l.username+'" target="_blank"><img src="'+e.user.profile_image_url+'" alt="'+l.username+'" /></a>':"",o=l.show_time?a(_.timestamp):"",i=l.show_media&&_.media_url?'<a href="https://twitter.com/'+l.username+"/status/"+_.id_str+'" target="_blank"><img src="'+_.media_url+":"+l.show_media_size+'" alt="'+l.username+'" class="media" /></a>':"",l.show_actions?(n='<div class="action-box"><ul>',n+='<li class="ab_reply"><a title="Reply" href="https://twitter.com/intent/tweet?in_reply_to='+_.id_str+'">'+l.action_reply_icon+"</a></li>",n+='<li class="ab_retweet"><a title="Retweet" href="https://twitter.com/intent/retweet?tweet_id='+_.id_str+'">'+l.action_retweet_icon+"</a>"+(""!=_.retweet_count_f?"<span>"+_.retweet_count_f+"</span>":"")+"</li>",n+='<li class="ab_favorite"><a title="Favorite" href="https://twitter.com/intent/favorite?tweet_id='+_.id_str+'">'+l.action_favorite_icon+"</a>"+(""!=_.favorite_count_f?"<span>"+_.favorite_count_f+"</span>":"")+"</li>",n+="</ul></div>"):n="",s=l.show_retweeted_text&&_.retweeted_text?_.retweeted_text:_.text,c.append("<li>"+r+'<div class="tweets_txt">'+s.replace(u,'<a href="$1" target="_blank">$1</a>').replace(h,'<a href="https://twitter.com/$1" target="_blank">@$1</a>').replace(d,'<a href="https://twitter.com/search?q=%23$1" target="_blank">#$1</a>')+i+" <span>"+o+"</span>"+n+"</div></li>")}),void l.callback.call(this))}).fail(function(t,e,a){_.html("No tweets available")})})}})}(jQuery);
+(function($) {
+	$.fn.extend({
+
+		tweecool : function(options) {
+
+			var defaults = {
+				username : 'chrisOneOut',
+				limit : 10,
+				profile_image : true,
+				show_time : true,
+				show_media : false,
+                                show_media_size: 'thumb',  //values: small, large, thumb, medium
+                                show_actions: false,
+                                action_reply_icon: '&crarr;',
+                                action_retweet_icon: '&prop;',
+                                action_favorite_icon: '&#10084',
+                                profile_img_url: 'profile', //Values: profile, tweet
+                                show_retweeted_text: false //This will show the original tweet in order to avoid any truncated text, and also the "RT @tweecool:" is removed which helps with 140 character limit
+
+			}
+
+			var options = $.extend(defaults, options);
+
+			function xTimeAgo(time) {
+				var nd = new Date();
+				//var gmtDate = Date.UTC(nd.getFullYear(), nd.getMonth(), nd.getDate(), nd.getHours(), nd.getMinutes(), nd.getMilliseconds());
+				var gmtDate = Date.parse(nd);
+				var tweetedTime = time * 1000; //convert seconds to milliseconds
+				var timeDiff = (gmtDate - tweetedTime) / 1000; //convert milliseconds to seconds
+
+				var second = 1, minute = 60, hour = 60 * 60, day = 60 * 60 * 24, week = 60 * 60 * 24 * 7, month = 60 * 60 * 24 * 30, year = 60 * 60 * 24 * 365;
+
+				if (timeDiff > second && timeDiff < minute) {
+                                    return Math.round(timeDiff / second) + " second"+(Math.round(timeDiff / second) > 1?'s':'')+" ago";
+				} else if (timeDiff >= minute && timeDiff < hour) {
+					return Math.round(timeDiff / minute) + " minute"+(Math.round(timeDiff / minute) > 1?'s':'')+" ago";
+				} else if (timeDiff >= hour && timeDiff < day) {
+					return Math.round(timeDiff / hour) + " hour"+(Math.round(timeDiff / hour) > 1?'s':'' )+" ago";
+				} else if (timeDiff >= day && timeDiff < week) {
+					return Math.round(timeDiff / day) + " day"+(Math.round(timeDiff / day) > 1 ?'s':'')+" ago";
+				} else if (timeDiff >= week && timeDiff < month) {
+					return Math.round(timeDiff / week) + " week"+(Math.round(timeDiff / week) > 1?'s':'')+" ago";
+				} else if (timeDiff >= month && timeDiff < year) {
+					return Math.round(timeDiff / month) + " month"+(Math.round(timeDiff / month) > 1 ?'s':'')+" ago";
+				} else {
+					return 'over a year ago';
+				}
+			}
+
+			return this.each(function() {
+				var o = options;
+				var wrapper = $(this);
+				var wInner = $('<ul>').appendTo(wrapper);
+				var urlpattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+				var usernamepattern = /@+(\w+)/ig;
+				var hashpattern = /#+(\w+)/ig;
+                                var pIMG, media, timestamp, abox, mtext;
+
+				$.getJSON("http://tweecool.com/api/?screenname=" + o.username + "&count=" + o.limit, function(data) {
+
+					if (data.errors || data == null) {
+						wrapper.html('No tweets available.');
+						return false;
+					}
+
+					$.each(data.tweets, function(i, field) {
+
+                                                if (o.profile_image) {
+                                                    if( o.profile_img_url == 'tweet' ){
+                                                        pIMG = '<a href="https://twitter.com/' + o.username + '/status/'+field.id_str+'" target="_blank"><img src="' + data.user.profile_image_url + '" alt="' + o.username + '" /></a>';
+                                                    }else{
+                                                        pIMG = '<a href="https://twitter.com/' + o.username + '" target="_blank"><img src="' + data.user.profile_image_url + '" alt="' + o.username + '" /></a>';
+                                                    }
+                                                }else{
+                                                    pIMG = '';
+                                                }
+
+						if (o.show_time) {
+						    timestamp = xTimeAgo(field.timestamp);
+						}else{
+                                                    timestamp = '';
+                                                }
+
+                                                if(o.show_media && field.media_url){
+                                                   media = '<a href="https://twitter.com/' + o.username + '/status/'+field.id_str+'" target="_blank"><img src="' + field.media_url + ':'+o.show_media_size+'" alt="' + o.username + '" class="media" /></a>';
+                                                }else{
+                                                   media = '';
+                                                }
+
+                                                if( o.show_actions ){
+                                                   abox = '<div class="action-box"><ul>';
+                                                   abox += '<li class="ab_reply"><a title="Reply" href="https://twitter.com/intent/tweet?in_reply_to='+field.id_str+'">'+o.action_reply_icon+'</a></li>';
+                                                   abox += '<li class="ab_retweet"><a title="Retweet" href="https://twitter.com/intent/retweet?tweet_id='+field.id_str+'">'+o.action_retweet_icon+'</a>'+( field.retweet_count_f != '' ?'<span>'+field.retweet_count_f+'</span>':'' )+'</li>';
+                                                   abox += '<li class="ab_favorite"><a title="Favorite" href="https://twitter.com/intent/favorite?tweet_id='+field.id_str+'">'+o.action_favorite_icon+'</a>'+( field.favorite_count_f != '' ?'<span>'+field.favorite_count_f+'</span>':'' )+'</li>';
+                                                   abox += '</ul></div>';
+                                                }else{
+                                                  abox = '';
+                                                }
+
+                                                if( o.show_retweeted_text && field.retweeted_text ){
+                                                   mtext = field.retweeted_text;
+                                                }else{
+                                                   mtext =  field.text;
+                                                }
+
+						wInner.append('<li>' + pIMG + '<div class="tweets_txt">' + mtext.replace(urlpattern, '<a href="$1" target="_blank">$1</a>').replace(usernamepattern, '<a href="https://twitter.com/$1" target="_blank">@$1</a>').replace(hashpattern, '<a href="https://twitter.com/search?q=%23$1" target="_blank">#$1</a>') + media + ' <span>' + timestamp + '</span>'+abox+'</div></li>');
+					});
+
+				}).fail(function(jqxhr, textStatus, error) {
+					//var err = textStatus + ', ' + error;
+					wrapper.html('No tweets available');
+				});
+
+			});
+
+		}
+	});
+
+})(jQuery);

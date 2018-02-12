@@ -15,6 +15,12 @@ $(document).ready(function(){
         },
 
         // GENERAL SETTINGS
-        length:400                                      //Integer: For posts with text longer than this length, show an ellipsis.
+        length:400,                                      //Integer: For posts with text longer than this length, show an ellipsis.
+        template_html:                                  //String: HTML used for each post. This overrides the 'template' filename option
+          '<article class="instagram-post"> \
+            <h4>{{=it.author_name}}</h4><p>{{=it.text}}  \
+            <a href="{{=it.link}}" target="_blank">read more</a> \
+            </p> \
+          </article>'
     });
 });

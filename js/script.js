@@ -20,7 +20,6 @@ $(document).ready(function() {
             instagram: {
                 accounts: '@chrisOneOut',
                 limit: 2,
-                client_id: '999f81975caa49708e4de857382d0ce2',
                 access_token: '2242907265.5a4266b.999f81975caa49708e4de857382d0ce2'
             },
             // GENERAL SETTINGS

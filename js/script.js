@@ -23,4 +23,5 @@ $(document).ready(function(){
             </p> \
           </article>'
     });
+    console.log("THis is it" + it)
 });

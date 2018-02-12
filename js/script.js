@@ -4,11 +4,3 @@ var feed = new Instafeed({
     accessToken: '2242907265.1677ed0.a3c26012ce7a4a479d176c70e2a2c13e'
   });
 feed.run();
-
-$(document).ready(function() {
-  $('#tweecool').tweecool({
-  //settings
-  username : 'chrisOneOut',
-  limit : 5
-  });
-});
